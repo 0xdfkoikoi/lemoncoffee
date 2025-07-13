@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Login Page</title>
+  <style>
+    body { font-family: Arial, sans-serif; background: #f4f4f4; }
+    .container { max-width: 350px; margin: 80px auto; background: #fff; padding: 30px; border-radius: 8px; box-shadow: 0 2px 8px #ccc; }
+    h2 { text-align: center; }
+    .hidden { display: none; }
+    .role-section { margin-top: 20px; padding: 15px; border-radius: 5px; }
+    .admin { background: #e3f2fd; }
+    .staff { background: #e8f5e9; }
+    .error { color: red; text-align: center; }
+    label { display: block; margin-top: 10px; }
+    input[type="text"], input[type="password"] { width: 100%; padding: 8px; margin-top: 5px; }
+    button { width: 100%; padding: 10px; margin-top: 15px; background: #1976d2; color: #fff; border: none; border-radius: 4px; cursor: pointer; }
+    button:hover { background: #1565c0; }
+  </style>
+</head>
+<body>
+  <div class="container" id="login-container">
+    <h1 style="text-align:center; margin-bottom:10px; font-size:1.5em; color:#1976d2;">Cafe Inventory Management System by lemoncoffee</h1>
+    <h2>Login</h2>
+    <div class="error" id="error-msg"></div>
+    <form id="login-form">
+      <label for="username">Username:</label>
+      <input type="text" id="username" required>
+      <label for="password">Password:</label>
+      <input type="password" id="password" required>
+      <button type="submit">Log In</button>
+    </form>
+  </div>
+
+  <div class="container hidden" id="admin-section">
+    <h2>Admin Dashboard</h2>
+    <div class="role-section admin">
+      Welcome, Admin!<br>
+      <button onclick="logout()">Logout</button>
+    </div>
+  </div>
+
+  <div class="container hidden" id="staff-section">
+    <h2>Staff Dashboard</h2>
+    <div class="role-section staff">
+      Welcome, Staff!<br>
+      <button onclick="logout()">Logout</button>
+    </div>
+  </div>
+
+  <script>
+    // Hardcoded users: username, password, role
+    const users = [
+      { username: 'admin', password: 'admin123', role: 'admin' },
+      { username: 'staff', password: 'staff123', role: 'staff' }
+    ];
+
+    const loginForm = document.getElementById('login-form');
+    const errorMsg = document.getElementById('error-msg');
+    const loginContainer = document.getElementById('login-container');
+    const adminSection = document.getElementById('admin-section');
+    const staffSection = document.getElementById('staff-section');
+
+    loginForm.addEventListener('submit', function(e) {
+      e.preventDefault();
+      const username = document.getElementById('username').value.trim();
+      const password = document.getElementById('password').value.trim();
+      const user = users.find(u => u.username === username && u.password === password);
+
+      if (user) {
+        errorMsg.textContent = '';
+        loginContainer.classList.add('hidden');
+        if (user.role === 'admin') {
+          adminSection.classList.remove('hidden');
+        } else if (user.role === 'staff') {
+          staffSection.classList.remove('hidden');
+        }
+      } else {
+        errorMsg.textContent = 'Invalid username or password.';
+      }
+    });
+
+    function logout() {
+      loginContainer.classList.remove('hidden');
+      adminSection.classList.add('hidden');
+      staffSection.classList.add('hidden');
+      loginForm.reset();
+    }
+  </script>
+</body>
+</html>
