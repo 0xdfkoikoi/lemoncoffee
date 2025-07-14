@@ -1,4 +1,4 @@
-const WEB_APP_URL = "https://script.google.com/macros/s/AKfycbxmXWrPwNhvpe51bhISU0uBzRlI5jPxcntYN6hcOuZsrBIldDvzTErGEAtmcNE6eDpdbg/exec";
+const WEB_APP_URL = "https://script.google.com/macros/s/AKfycbxmXWrPwNhvpe51bhISU0uBzRlI5jPxcntYN6hcOuZsrBIldDvzTErGEAtmcNE6eDpdbg/exec"; // Replace this with your real URL
 
 document.getElementById("menuForm").addEventListener("submit", async function (e) {
   e.preventDefault();
@@ -11,6 +11,8 @@ document.getElementById("menuForm").addEventListener("submit", async function (e
     active: form.active.value,
   };
 
+  console.log("Sending data:", menuData);
+
   try {
     const response = await fetch(WEB_APP_URL, {
       method: "POST",
@@ -20,14 +22,17 @@ document.getElementById("menuForm").addEventListener("submit", async function (e
       },
     });
 
-    if (response.ok) {
-      alert("Menu item saved to Google Sheet!");
+    const text = await response.text();
+    console.log("Response from Google Apps Script:", text);
+
+    if (response.ok && text.includes("Success")) {
+      alert("✅ Menu item saved!");
       form.reset();
     } else {
-      alert("Error saving to sheet.");
+      alert("❌ Failed to save. Check the script or sheet name.");
     }
-  } catch (error) {
-    console.error("Fetch error:", error);
-    alert("Failed to connect to Google Apps Script.");
+  } catch (err) {
+    console.error(err);
+    alert("❌ Could not connect to Google Apps Script.");
   }
 });
