@@ -1,5 +1,6 @@
-console.log("Inventory system loaded!");
-document.getElementById("menuForm").addEventListener("submit", function (e) {
+const WEB_APP_URL = "https://script.google.com/macros/s/AKfycbwkr21lieb9MK8WUfw7NkRjvxGkGDFsfL5uzPuOBwVF2DRwDELQmW4kGRWcZsUoy9i13g/exec"; // replace with yours
+
+document.getElementById("menuForm").addEventListener("submit", async function (e) {
   e.preventDefault();
 
   const form = e.target;
@@ -10,13 +11,23 @@ document.getElementById("menuForm").addEventListener("submit", function (e) {
     active: form.active.value,
   };
 
-  console.log("Menu Item:", menuData);
+  try {
+    const response = await fetch(WEB_APP_URL, {
+      method: "POST",
+      body: JSON.stringify(menuData),
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
 
-  // Show preview (for now)
-  document.getElementById("menuPreview").innerHTML = `
-    <p><strong>${menuData.name}</strong> - ${menuData.category} - Rp${menuData.price} (${menuData.active})</p>
-  `;
-
-  // TODO: Later - send to Google Sheets
-  form.reset();
+    if (response.ok) {
+      alert("Menu item saved to Google Sheet!");
+      form.reset();
+    } else {
+      alert("Error saving to sheet.");
+    }
+  } catch (error) {
+    console.error("Fetch error:", error);
+    alert("Failed to connect to Google Apps Script.");
+  }
 });
