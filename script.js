@@ -1,4 +1,4 @@
-const WEB_APP_URL = "https://script.google.com/macros/s/AKfycbwkr21lieb9MK8WUfw7NkRjvxGkGDFsfL5uzPuOBwVF2DRwDELQmW4kGRWcZsUoy9i13g/exec"; // replace with yours
+const WEB_APP_URL = "https://script.google.com/macros/s/AKfycbwkr21lieb9MK8WUfw7NkRjvxGkGDFsfL5uzPuOBwVF2DRwDELQmW4kGRWcZsUoy9i13g/exec"
 
 document.getElementById("menuForm").addEventListener("submit", async function (e) {
   e.preventDefault();
