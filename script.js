@@ -1,14 +1,14 @@
-const WEB_APP_URL = "https://script.google.com/macros/s/AKfycbxh_YtjY9Rn5AoXD2_GaMdLjsO9uV8uVn4bL9opf4MufgmPgpIxEp69H7BhjVY6_N6C/exec"; // Replace this with your real URL
+const WEB_APP_URL = "https://script.google.com/macros/s/AKfycbxmXWrPwNhvpe51bhISU0uBzRlI5jPxcntYN6hcOuZsrBIldDvzTErGEAtmcNE6eDpdbg/exec";
 
 document.getElementById("menuForm").addEventListener("submit", async function (e) {
   e.preventDefault();
 
   const form = e.target;
   const menuData = {
-    name: form.menuName.value,
+    menuName: form.menuName.value,
     category: form.category.value,
     price: parseFloat(form.price.value),
-    active: form.active.value,
+    active: form.active.checked, // Assuming "active" is a checkbox
   };
 
   console.log("Sending data:", menuData);
@@ -25,14 +25,14 @@ document.getElementById("menuForm").addEventListener("submit", async function (e
     const text = await response.text();
     console.log("Response from Google Apps Script:", text);
 
-    if (response.ok && text.includes("Success")) {
-      alert("✅ Menu item saved!");
+    if (response.ok) {
+      alert("✅ Menu item submitted successfully!");
       form.reset();
     } else {
-      alert("❌ Failed to save. Check the script or sheet name.");
+      alert("❌ Failed to submit menu item. Please check the server response.");
     }
   } catch (err) {
     console.error(err);
-    alert("❌ Could not connect to Google Apps Script.");
+    alert("❌ An error occurred while submitting the menu item.");
   }
 });
