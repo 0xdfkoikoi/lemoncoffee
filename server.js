@@ -18,9 +18,6 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 // Hardcoded users for now (replace with Google Sheets later)
 const users = [
-  { username: 'manager', password: bcrypt.hashSync('manager123', 10), role: 'manager' },
-  { username: 'employee', password: bcrypt.hashSync('employee123', 10), role: 'employee' }
-];
 
 const JWT_SECRET = 'your_jwt_secret'; // Change this to a strong secret in production
 
