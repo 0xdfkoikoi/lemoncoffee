@@ -3,44 +3,24 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Location Test</title>
+    <title>WhatsApp Message Test</title>
 </head>
 <body>
-    <h1>Location Test</h1>
-    <button onclick="getLocation()">Click to Share Your Location</button>
-    <p id="location"></p>
+    <h1>Send Message via WhatsApp</h1>
+    <button onclick="sendWhatsAppMessage()">Send Message</button>
 
     <script>
-        function getLocation() {
-            if (navigator.geolocation) {
-                navigator.geolocation.getCurrentPosition(showPosition, showError);
-            } else {
-                document.getElementById("location").innerHTML = "Geolocation is not supported by this browser.";
-            }
-        }
+        function sendWhatsAppMessage() {
+            const phoneNumber = "+6287766860922"; // Replace with the recipient's phone number (without + or 00)
+            const message = encodeURIComponent("Hello, I’m testing WhatsApp link!"); // The pre-filled message
 
-        function showPosition(position) {
-            const lat = position.coords.latitude;
-            const lon = position.coords.longitude;
-            document.getElementById("location").innerHTML = "Latitude: " + lat + "<br>Longitude: " + lon;
-        }
+            // Construct the WhatsApp URL
+            const url = `https://wa.me/${phoneNumber}?text=${message}`;
 
-        function showError(error) {
-            switch(error.code) {
-                case error.PERMISSION_DENIED:
-                    document.getElementById("location").innerHTML = "User denied the request for Geolocation.";
-                    break;
-                case error.POSITION_UNAVAILABLE:
-                    document.getElementById("location").innerHTML = "Location information is unavailable.";
-                    break;
-                case error.TIMEOUT:
-                    document.getElementById("location").innerHTML = "The request to get user location timed out.";
-                    break;
-                case error.UNKNOWN_ERROR:
-                    document.getElementById("location").innerHTML = "An unknown error occurred.";
-                    break;
-            }
+            // Open the URL (will open WhatsApp)
+            window.open(url, "_blank");
         }
     </script>
 </body>
 </html>
+
