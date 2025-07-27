@@ -3,59 +3,26 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Send Location via WhatsApp</title>
+    <title>WhatsApp Message Test</title>
 </head>
 <body>
-    <h1>Send Your Location via WhatsApp</h1>
-    <button onclick="getLocation()">Share My Location</button>
+    <h1>Send Message via WhatsApp</h1>
+    <button onclick="sendWhatsAppMessage()">Send Message</button>
 
     <script>
-        function getLocation() {
-            if (navigator.geolocation) {
-                navigator.geolocation.getCurrentPosition(sendLocationToWhatsApp, showError);
-            } else {
-                alert("Geolocation is not supported by this browser.");
-            }
-        }
+        function sendWhatsAppMessage() {
+            const phoneNumber = "+6285722287017"; // Replace with the recipient's phone number (without + or 00)
+            const message = encodeURIComponent("klick link ieu nda lamun buka whatsapp chat si bowo berarti bisa!"); // The pre-filled message
 
-        function sendLocationToWhatsApp(position) {
-            const lat = position.coords.latitude;
-            const lon = position.coords.longitude;
+            // Construct the WhatsApp URL
+            const url = `https://wa.me/${phoneNumber}?text=${message}`;
 
-            // Construct the message with coordinates
-            const message = `Hey, I’m here! \nLatitude: ${lat}\nLongitude: ${lon}`;
-
-            // URL-encode the message
-            const encodedMessage = encodeURIComponent(message);
-
-            // Specify the phone number (replace with your friend's phone number)
-            const phoneNumber = "+6287766860922"; // Use the recipient's phone number (in international format)
-
-            // Construct the WhatsApp URL with the message
-            const url = `https://wa.me/${phoneNumber}?text=${encodedMessage}`;
-
-            // Open WhatsApp with the pre-filled message
+            // Open the URL (will open WhatsApp)
             window.open(url, "_blank");
-        }
-
-        function showError(error) {
-            switch(error.code) {
-                case error.PERMISSION_DENIED:
-                    alert("User denied the request for Geolocation.");
-                    break;
-                case error.POSITION_UNAVAILABLE:
-                    alert("Location information is unavailable.");
-                    break;
-                case error.TIMEOUT:
-                    alert("The request to get user location timed out.");
-                    break;
-                case error.UNKNOWN_ERROR:
-                    alert("An unknown error occurred.");
-                    break;
-            }
         }
     </script>
 </body>
 </html>
+
 
 
